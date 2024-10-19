@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CampaignModule } from './campaign/campaign.module';
 import { UserModule } from './user/user.module';
+import { User } from './user/user.entity';
+import { Campaign } from './campaign/campaign.entity';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { UserModule } from './user/user.module';
       username: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [],
+      entities: [User, Campaign],
     }),
     CampaignModule,
     UserModule,
