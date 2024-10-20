@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CampaignModule } from './campaign/campaign.module';
-import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Campaign } from './campaign/campaign.entity';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,9 +18,11 @@ import { Campaign } from './campaign/campaign.entity';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [User, Campaign],
+      synchronize: true,
     }),
     CampaignModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
