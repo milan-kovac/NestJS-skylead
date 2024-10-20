@@ -2,6 +2,7 @@
 <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS Logo" style="width: auto; max-width: 100%;" />
 
 
+This repository serves as a presentation of the fundamentals of ***[NestJS](https://docs.nestjs.com/)*** and its features. The goal is to provide insights to my colleagues at ***[Skylead](https://www.linkedin.com/company/skyleadio/)***.
 
 ## Content
 
