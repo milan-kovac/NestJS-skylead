@@ -37,7 +37,6 @@ export class AuthService {
 
       return this.jwtService.sign({ id: user.id, role: user.role });
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -48,7 +47,6 @@ export class AuthService {
       const { id } = decoded;
       return await this.userService.getUserById(id);
     } catch (e) {
-      console.log('e', e);
       throw new UnauthorizedException('Not a valid JWT token.');
     }
   }
