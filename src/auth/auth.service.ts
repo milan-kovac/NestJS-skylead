@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ClassSerializerInterceptor, Injectable, UnauthorizedException, UseInterceptors } from '@nestjs/common';
 import { AuthRequestDto } from './dtos/request/auth.dto';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -34,9 +35,21 @@ export class AuthService {
         throw new BadRequestException('Incorrect credentials.');
       }
 
-      return this.jwtService.sign({ id: user.id });
+      return this.jwtService.sign({ id: user.id, role: user.role });
     } catch (error) {
+      console.log(error);
       throw error;
+    }
+  }
+
+  async validateToken(bearerToken: string): Promise<User> {
+    try {
+      const decoded = this.jwtService.verify(bearerToken);
+      const { id } = decoded;
+      return await this.userService.getUserById(id);
+    } catch (e) {
+      console.log('e', e);
+      throw new UnauthorizedException('Not a valid JWT token.');
     }
   }
 

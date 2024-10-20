@@ -1,10 +1,10 @@
 import { ApiResponseProperty } from '@nestjs/swagger';
 import { GenericResponse } from 'src/shared/responses/create.response';
+import { CampaignDto } from '../campaign.dto';
 
-export class SignUpResponseDto extends GenericResponse {
+export class CreatCampaignResponseDto extends GenericResponse {
   @ApiResponseProperty({
-    type: Boolean,
-    example: true,
+    type: CampaignDto,
   })
-  data: boolean;
+  data: CampaignDto;
 }
