@@ -9,4 +9,8 @@ export class UserRepository {
     @InjectRepository(User)
     private readonly user: Repository<User>,
   ) {}
+
+  async create(email: string, password: string): Promise<void> {
+    await this.user.save({ email, password });
+  }
 }
