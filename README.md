@@ -1,5 +1,6 @@
 
-<img src="https://pbs.twimg.com/profile_images/1110148780991623201/vlqCsAVP_400x400.png" alt="logo" width="200" height="200" />
+<img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS Logo" style="width: auto; max-width: 100%;" />
+
 
 
 ## Content
