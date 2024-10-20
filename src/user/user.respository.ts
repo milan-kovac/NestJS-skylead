@@ -14,7 +14,11 @@ export class UserRepository {
     await this.user.save({ email, password });
   }
 
-  async getByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User> {
     return await this.user.findOneBy({ email });
+  }
+
+  async findById(id: number): Promise<User> {
+    return await this.user.findOneBy({ id });
   }
 }

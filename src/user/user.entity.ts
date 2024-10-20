@@ -1,6 +1,7 @@
 import { Campaign } from 'src/campaign/campaign.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Role } from './enum/role.enum';
+import { Role } from './enums/role.enum';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -10,6 +11,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
