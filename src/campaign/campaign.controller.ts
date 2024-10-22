@@ -10,6 +10,7 @@ import { CreatCampaignResponseDto } from './dtos/response/create.campaign.dto';
 import { CreateGenericResponse } from 'src/shared/responses/create.response';
 import { AdminCanGuard } from 'src/auth/guards/admin.can.guard';
 import { GetCampaignResponseDto } from './dtos/response/get.campaign.dto';
+import { ParseIdPipe } from 'src/shared/pipes/parse.id.pipe';
 
 @ApiTags('Campaigns')
 @ApiBearerAuth()
@@ -37,7 +38,7 @@ export class CampaignController {
   @UseGuards(AuthGuard)
   @Get(':id')
   @CacheTTL(600000)
-  async getCampaign(@Param('id') id: number, @CurrentUser() user: User): Promise<GetCampaignResponseDto> {
+  async getCampaign(@Param('id', ParseIdPipe) id: number, @CurrentUser() user: User): Promise<GetCampaignResponseDto> {
     console.log('GETUJEM', id);
     const campagin = await this.campaignService.getCampaign(id, user);
     return CreateGenericResponse(campagin);
