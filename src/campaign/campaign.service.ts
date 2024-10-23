@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CampaignRepository } from './campaign.repository';
 import { CreateCampaignRequestDto } from './dtos/request/create.campaign.dto';
-import { User } from 'src/user/user.entity';
+import { User } from '../user/user.entity';
 import { Campaign } from './campaign.entity';
 
 @Injectable()
