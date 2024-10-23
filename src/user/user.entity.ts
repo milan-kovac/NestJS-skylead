@@ -1,5 +1,5 @@
-import { Campaign } from 'src/campaign/campaign.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Campaign } from '../campaign/campaign.entity';
 import { Role } from './enums/role.enum';
 import { Exclude } from 'class-transformer';
 
