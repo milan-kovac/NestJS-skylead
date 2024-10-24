@@ -20,4 +20,9 @@ export class CampaignService {
     }
     return campaign;
   }
+
+  async getAllCampaigns(user: User): Promise<Campaign[]> {
+    const campaigns = await this.campaignRepository.findAll(user);
+    return campaigns;
+  }
 }

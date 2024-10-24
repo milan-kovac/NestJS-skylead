@@ -23,4 +23,13 @@ export class CampaignRepository {
     }
     return await query.getOne();
   }
+
+  async findAll(user: User): Promise<Campaign[]> {
+    const query = this.campaign.createQueryBuilder('campaign');
+    if (user.role === Role.EDITOR) {
+      query.where('campaign.userId = :userId', { userId: user.id });
+    }
+
+    return await query.getMany();
+  }
 }

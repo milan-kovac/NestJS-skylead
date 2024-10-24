@@ -11,6 +11,7 @@ import { CreateGenericResponse } from 'src/shared/responses/create.response';
 import { AdminCanGuard } from 'src/auth/guards/admin.can.guard';
 import { GetCampaignResponseDto } from './dtos/response/get.campaign.dto';
 import { ParseIdPipe } from 'src/shared/pipes/parse.id.pipe';
+import { GetCampaignsResponseDto } from './dtos/response/get.campaigns.dto';
 
 @ApiTags('Campaigns')
 @ApiBearerAuth()
@@ -42,5 +43,16 @@ export class CampaignController {
     console.log('GETUJEM', id);
     const campagin = await this.campaignService.getCampaign(id, user);
     return CreateGenericResponse(campagin);
+  }
+
+  @ApiOperation({
+    summary: 'Get all campaigns'
+  })
+  @ApiResponse({ type: [GetCampaignResponseDto] })
+  @UseGuards(AuthGuard)
+  @Get()
+  async getAllCampaigns(@CurrentUser() user: User): Promise<GetCampaignsResponseDto> {
+    const campaigns = await this.campaignService.getAllCampaigns(user);
+    return CreateGenericResponse(campaigns);
   }
 }
