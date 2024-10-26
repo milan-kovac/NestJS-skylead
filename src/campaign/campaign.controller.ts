@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { CampaignService } from './campaign.service';
@@ -12,6 +12,7 @@ import { AdminCanGuard } from 'src/auth/guards/admin.can.guard';
 import { GetCampaignResponseDto } from './dtos/response/get.campaign.dto';
 import { ParseIdPipe } from 'src/shared/pipes/parse.id.pipe';
 import { GetCampaignsResponseDto } from './dtos/response/get.campaigns.dto';
+import { PaginationQueryDTO } from './dtos/request/paginaion.query.dto';
 
 @ApiTags('Campaigns')
 @ApiBearerAuth()
@@ -51,8 +52,8 @@ export class CampaignController {
   @ApiResponse({ type: [GetCampaignResponseDto] })
   @UseGuards(AuthGuard)
   @Get()
-  async getAllCampaigns(@CurrentUser() user: User): Promise<GetCampaignsResponseDto> {
-    const campaigns = await this.campaignService.getAllCampaigns(user);
+  async getAllCampaigns(@CurrentUser() user: User, @Query() paginationQuery: PaginationQueryDTO): Promise<GetCampaignsResponseDto> {
+    const campaigns = await this.campaignService.getAllCampaigns(user, paginationQuery);
     return CreateGenericResponse(campaigns);
   }
 }
