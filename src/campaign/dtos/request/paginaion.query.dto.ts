@@ -1,6 +1,7 @@
+import { DefaultValuePipe } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsIn, IsInt, IsOptional, IsPositive, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsIn, IsInt, IsOptional, IsPositive, IsString, Max } from 'class-validator';
 import { CampaignSortByEnum } from 'src/campaign/enums/sort.by.enum';
 
 export class PaginationQueryDTO {
@@ -8,20 +9,20 @@ export class PaginationQueryDTO {
   @Type(() => Number)
   @IsInt()
   @IsPositive()
-  limit?: number = 4;
+  @Max(20)
+  limit: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  @IsPositive()  
-  offset?: number = 0;
+  offset: number;
 
   @IsOptional()
   @IsString()
-  @IsIn(Object.keys(CampaignSortByEnum))
-  sortBy?: string = 'id';
+  @IsIn(Object.values(CampaignSortByEnum))
+  sortBy: string;
 
   @IsOptional()
   @IsIn(['ASC', 'DESC'])
-  order?: 'ASC' | 'DESC' = 'ASC';
+  order: 'ASC' | 'DESC' = 'ASC';
 }
