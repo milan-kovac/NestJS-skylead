@@ -4,7 +4,7 @@ import { Transform, Type } from 'class-transformer';
 import { IsIn, IsInt, IsOptional, IsPositive, IsString, Max } from 'class-validator';
 import { CampaignSortByEnum } from 'src/campaign/enums/sort.by.enum';
 
-export class PaginationQueryDTO {
+export class GetAllCampaignsQueryParams {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -24,5 +24,5 @@ export class PaginationQueryDTO {
 
   @IsOptional()
   @IsIn(['ASC', 'DESC'])
-  order: 'ASC' | 'DESC' = 'ASC';
+  order: 'ASC' | 'DESC';
 }

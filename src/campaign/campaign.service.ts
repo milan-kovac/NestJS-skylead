@@ -3,7 +3,7 @@ import { CampaignRepository } from './campaign.repository';
 import { CreateCampaignRequestDto } from './dtos/request/create.campaign.dto';
 import { User } from 'src/user/user.entity';
 import { Campaign } from './campaign.entity';
-import { PaginationQueryDTO } from './dtos/request/paginaion.query.dto';
+import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 
 @Injectable()
 export class CampaignService {
@@ -22,7 +22,7 @@ export class CampaignService {
     return campaign;
   }
 
-  async getAllCampaigns(user: User, paginationQueryDTO: PaginationQueryDTO): Promise<Campaign[]> {
-    return await this.campaignRepository.findAll(user, paginationQueryDTO);
+  async getAllCampaigns(user: User, getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<Campaign[]> {
+    return await this.campaignRepository.findAll(user, getAllCampaignsQueryParams);
   }
 }

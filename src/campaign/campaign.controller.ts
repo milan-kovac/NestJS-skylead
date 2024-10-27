@@ -12,7 +12,8 @@ import { AdminCanGuard } from 'src/auth/guards/admin.can.guard';
 import { GetCampaignResponseDto } from './dtos/response/get.campaign.dto';
 import { ParseIdPipe } from 'src/shared/pipes/parse.id.pipe';
 import { GetCampaignsResponseDto } from './dtos/response/get.campaigns.dto';
-import { PaginationQueryDTO } from './dtos/request/paginaion.query.dto';
+import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
+import { GetAllCampaignsQueryDefaultValuesPipe } from './pipes/get.all.campaigns.query.default.values.pipe';
 
 @ApiTags('Campaigns')
 @ApiBearerAuth()
@@ -52,8 +53,8 @@ export class CampaignController {
   @ApiResponse({ type: [GetCampaignResponseDto] })
   @UseGuards(AuthGuard)
   @Get()
-  async getAllCampaigns(@CurrentUser() user: User, @Query() paginationQuery: PaginationQueryDTO): Promise<GetCampaignsResponseDto> {
-    const campaigns = await this.campaignService.getAllCampaigns(user, paginationQuery);
+  async getAllCampaigns(@CurrentUser() user: User, @Query(new GetAllCampaignsQueryDefaultValuesPipe()) getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<GetCampaignsResponseDto> {
+    const campaigns = await this.campaignService.getAllCampaigns(user, getAllCampaignsQueryParams);
     return CreateGenericResponse(campaigns);
   }
 }

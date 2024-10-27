@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Campaign } from './campaign.entity';
 import { User } from 'src/user/user.entity';
 import { Role } from 'src/user/enums/role.enum';
-import { PaginationQueryDTO } from './dtos/request/paginaion.query.dto';
+import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 
 @Injectable()
 export class CampaignRepository {
@@ -25,15 +25,15 @@ export class CampaignRepository {
     return await query.getOne();
   }
 
-  async findAll(user: User, paginationQueryDTO: PaginationQueryDTO): Promise<Campaign[]> {
+  async findAll(user: User, getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<Campaign[]> {
     const query = this.campaign.createQueryBuilder('campaign');
     if (user.role === Role.EDITOR) {
       query.where('campaign.userId = :userId', { userId: user.id });
     }
 
-    query.addOrderBy(paginationQueryDTO.sortBy, paginationQueryDTO.order);
-    query.offset(paginationQueryDTO.offset);
-    query.limit(paginationQueryDTO.limit);
+    query.addOrderBy(getAllCampaignsQueryParams.sortBy, getAllCampaignsQueryParams.order);
+    query.offset(getAllCampaignsQueryParams.offset);
+    query.limit(getAllCampaignsQueryParams.limit);
 
     return await query.getMany();
   }
