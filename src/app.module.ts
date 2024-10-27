@@ -18,7 +18,7 @@ import { UserModule } from './user/user.module';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [User, Campaign],
-      synchronize: true,
+      synchronize: true
     }),
     CampaignModule,
     UserModule,

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Campaign } from './campaign.entity';
 import { User } from '../user/user.entity';
 import { Role } from '../user/enums/role.enum';
+import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 
 @Injectable()
 export class CampaignRepository {
@@ -22,5 +23,18 @@ export class CampaignRepository {
       query.andWhere('campaign.userId = :userId', { userId: user.id });
     }
     return await query.getOne();
+  }
+
+  async findAll(user: User, getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<Campaign[]> {
+    const query = this.campaign.createQueryBuilder('campaign');
+    if (user.role === Role.EDITOR) {
+      query.where('campaign.userId = :userId', { userId: user.id });
+    }
+
+    query.addOrderBy(getAllCampaignsQueryParams.sortBy, getAllCampaignsQueryParams.order);
+    query.offset(getAllCampaignsQueryParams.offset);
+    query.limit(getAllCampaignsQueryParams.limit);
+
+    return await query.getMany();
   }
 }

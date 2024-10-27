@@ -3,6 +3,7 @@ import { CampaignRepository } from './campaign.repository';
 import { CreateCampaignRequestDto } from './dtos/request/create.campaign.dto';
 import { User } from '../user/user.entity';
 import { Campaign } from './campaign.entity';
+import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 
 @Injectable()
 export class CampaignService {
@@ -19,5 +20,9 @@ export class CampaignService {
       throw new BadRequestException('Campaign not found.');
     }
     return campaign;
+  }
+
+  async getAllCampaigns(user: User, getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<Campaign[]> {
+    return await this.campaignRepository.findAll(user, getAllCampaignsQueryParams);
   }
 }
