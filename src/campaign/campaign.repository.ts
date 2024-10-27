@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Campaign } from './campaign.entity';
-import { User } from 'src/user/user.entity';
-import { Role } from 'src/user/enums/role.enum';
+import { User } from '../user/user.entity';
+import { Role } from '../user/enums/role.enum';
 import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 
 @Injectable()
