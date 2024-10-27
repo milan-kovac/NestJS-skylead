@@ -1,7 +1,5 @@
-import { DefaultValuePipe } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsIn, IsInt, IsOptional, IsPositive, IsString, Max } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsIn, IsInt, IsOptional, IsPositive, IsString, Max, Min } from 'class-validator';
 import { CampaignSortByEnum } from 'src/campaign/enums/sort.by.enum';
 
 export class GetAllCampaignsQueryParams {
@@ -15,6 +13,7 @@ export class GetAllCampaignsQueryParams {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
+  @Min(0)
   offset: number;
 
   @IsOptional()

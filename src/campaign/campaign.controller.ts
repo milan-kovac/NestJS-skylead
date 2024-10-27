@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { CampaignService } from './campaign.service';
 import { CreateCampaignRequestDto } from './dtos/request/create.campaign.dto';
@@ -52,6 +52,10 @@ export class CampaignController {
   })
   @ApiResponse({ type: [GetCampaignResponseDto] })
   @UseGuards(AuthGuard)
+  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Number of items per page (max 20)', example: 10 })
+  @ApiQuery({ name: 'offset', required: false, type: Number, description: 'Number of items to skip', example: 0 })
+  @ApiQuery({ name: 'sortBy', required: false, enum: ['id', 'name', 'createdAt', 'updatedAt'], description: 'Field to sort by', example: 'id' })
+  @ApiQuery({ name: 'order', required: false, enum: ['ASC', 'DESC'], description: 'Order of sorting', example: 'ASC' })
   @Get()
   async getAllCampaigns(@CurrentUser() user: User, @Query(new GetAllCampaignsQueryDefaultValuesPipe()) getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<GetCampaignsResponseDto> {
     const campaigns = await this.campaignService.getAllCampaigns(user, getAllCampaignsQueryParams);
