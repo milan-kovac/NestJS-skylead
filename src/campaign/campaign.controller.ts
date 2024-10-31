@@ -14,6 +14,8 @@ import { ParseIdPipe } from 'src/shared/pipes/parse.id.pipe';
 import { GetCampaignsResponseDto } from './dtos/response/get.campaigns.dto';
 import { GetAllCampaignsQueryParams } from './dtos/request/paginaion.query.dto';
 import { GetAllCampaignsQueryDefaultValuesPipe } from './pipes/get.all.campaigns.query.default.values.pipe';
+import { Timeout } from './decorators/timeout.decorator';
+import { TimeoutInterceptor } from './interceptors/timeout.interceptor';
 
 @ApiTags('Campaigns')
 @ApiBearerAuth()
@@ -56,6 +58,8 @@ export class CampaignController {
   @ApiQuery({ name: 'offset', required: false, type: Number, description: 'Number of items to skip', example: 0 })
   @ApiQuery({ name: 'sortBy', required: false, enum: ['id', 'name', 'createdAt', 'updatedAt'], description: 'Field to sort by', example: 'id' })
   @ApiQuery({ name: 'order', required: false, enum: ['ASC', 'DESC'], description: 'Order of sorting', example: 'ASC' })
+  @UseInterceptors(TimeoutInterceptor)
+  @Timeout(3000)
   @Get()
   async getAllCampaigns(@CurrentUser() user: User, @Query(new GetAllCampaignsQueryDefaultValuesPipe()) getAllCampaignsQueryParams: GetAllCampaignsQueryParams): Promise<GetCampaignsResponseDto> {
     const campaigns = await this.campaignService.getAllCampaigns(user, getAllCampaignsQueryParams);
